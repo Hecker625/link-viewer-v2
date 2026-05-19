@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <style>
+        :root {
+            --vermillion: #ff4d2e;
+            --vermillion-glow: rgba(255, 77, 46, 0.4);
+            --vermillion-subtle: rgba(255, 77, 46, 0.1);
+            --bg-dark: #050507;
+            --glass: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(255, 77, 46, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none; /* Custom cursor used */
+        }
+
+        body {
+            height: 100vh;
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            perspective: 1200px;
+        }
+
+        /* Clean High-Tech Cursor */
+        #cursor {
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        #cursor-follower {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--vermillion);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: width 0.3s, height 0.3s, border-color 0.3s;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Mouse Follower Glow */
+        #glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), 
+                        var(--vermillion-glow) 0%, 
+                        transparent 50%);
+            z-index: 1;
+        }
+
+        /* Background Elements */
+        .grid {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(var(--vermillion-subtle) 1px, transparent 1px),
+                linear-gradient(90deg, var(--vermillion-subtle) 1px, transparent 1px);
+            background-size: 60px 60px;
+            transform: rotateX(60deg) translateY(-10%);
+            z-index: 0;
+            animation: moveGrid 30s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% { transform: rotateX(60deg) translateY(0); }
+            100% { transform: rotateX(60deg) translateY(60px); }
+        }
+
+        /* Pulsing Animated Border Container */
+        .border-pulse-wrap {
+            position: relative;
+            padding: 4px;
+            border-radius: 36px;
+            background: linear-gradient(var(--vermillion-subtle), transparent);
+            z-index: 10;
+            animation: borderPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes borderPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 77, 46, 0.1); }
+            50% { box-shadow: 0 0 50px rgba(255, 77, 46, 0.3); }
+        }
+
+        /* Launcher Card */
+        .launcher-card {
+            position: relative;
+            width: 480px;
+            padding: 3rem;
+            background: rgba(10, 10, 12, 0.9);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            text-align: center;
+            box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.9);
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+        }
+
+        .creator-tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--vermillion);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-weight: 800;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--vermillion);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--vermillion);
+            animation: dotPulse 1.5s infinite;
+        }
+
+        @keyframes dotPulse {
+            0% { transform: scale(1); box-shadow: 0 0 5px var(--vermillion); }
+            50% { transform: scale(1.5); box-shadow: 0 0 20px var(--vermillion); }
+            100% { transform: scale(1); box-shadow: 0 0 5px var(--vermillion); }
+        }
+
+        h1 {
+            font-weight: 900;
+            font-size: 2.4rem;
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+            background: linear-gradient(to bottom, #fff 40%, #666 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            color: var(--vermillion);
+            font-weight: bold;
+        }
+
+        /* Button Design */
+        .launch-btn {
+            position: relative;
+            padding: 24px 40px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            text-decoration: none;
+            color: #fff;
+            background: var(--vermillion);
+            border: none;
+            border-radius: 20px;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            overflow: hidden;
+            display: block;
+            text-transform: uppercase;
+            box-shadow: 0 15px 35px var(--vermillion-glow);
+        }
+
+        .launch-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .launch-btn:hover {
+            transform: scale(1.02) translateY(-5px);
+            box-shadow: 0 25px 50px var(--vermillion-glow);
+            letter-spacing: 6px;
+        }
+
+        .launch-btn:hover::before {
+            left: 100%;
+        }
+
+        .launch-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* Click Ripple Effect */
+        .ripple {
+            position: fixed;
+            border: 2px solid var(--vermillion);
+            background: transparent;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            animation: rippleEffect 0.6s ease-out forwards;
+            z-index: 9997;
+        }
+
+        @keyframes rippleEffect {
+            0% { width: 0; height: 0; opacity: 1; }
+            100% { width: 150px; height: 150px; opacity: 0; }
+        }
+
+        .footer {
+            margin-top: 3rem;
+            font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.15);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .former-name {
+            display: block;
+            margin-top: 5px;
+            font-size: 0.7rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="cursor"></div>
+    <div id="cursor-follower"></div>
+    <div id="glow"></div>
+    <div class="grid"></div>
+
+    <div class="border-pulse-wrap">
+        <div class="launcher-card">
+            <div class="creator-tag">
+                <div class="status-dot"></div>
+                Hello user
+            </div>
+
+            <h1>YOUTUBE<br>LINK<br>VIEWER<h1>
+
+            <p class="subtitle">
+                The site is primarily used for youtube  links. Example:<br>
+                <span class="highlight">www.youtube.com/watch?v=dQw4w9WgXcQ</span>
+                <br>
+                It still works for some other sites, but only some.
+ 
+            </p>
+
+            <div class="footer">
+                Title page designed by Viraaj.<br> Everything else built by Hecker625.<br><br><br>
+                <a href="https://vdevportfolio.replit.app"> Viraaj's Portfolio </a><br><br><br>
+                <a href="https://github.com/Hecker625"> Hecker625's Github </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const glow = document.getElementById('glow');
+        const card = document.querySelector('.launcher-card');
+        const cursor = document.getElementById('cursor');
+        const follower = document.getElementById('cursor-follower');
+
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let currentX = mouseX;
+        let currentY = mouseY;
+
+        let followerX = mouseX;
+        let followerY = mouseY;
+
+        // Custom Cursor Logic
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            // Update dot position
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+
+            // CORRECTED Parallax: Calculate tilt based on center of screen
+            // rotateX involves Y axis movement, rotateY involves X axis movement
+            const screenCenterX = window.innerWidth / 2;
+            const screenCenterY = window.innerHeight / 2;
+
+            // To tilt TOWARDS the mouse:
+            // If mouse is above center (negative diff), rotateX should be positive
+            // If mouse is right of center (positive diff), rotateY should be positive
+            const tiltX = (screenCenterY - e.clientY) / 25; 
+            const tiltY = (e.clientX - screenCenterX) / 25; 
+
+            card.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateZ(20px)`;
+        });
+
+        // Click Effects
+        document.addEventListener('mousedown', (e) => {
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            ripple.style.left = e.clientX + 'px';
+            ripple.style.top = e.clientY + 'px';
+            document.body.appendChild(ripple);
+
+            cursor.style.transform = 'translate(-50%, -50%) scale(0.5)';
+            follower.style.borderColor = '#fff';
+            follower.style.borderWidth = '2px';
+
+            setTimeout(() => ripple.remove(), 600);
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+            follower.style.borderColor = 'var(--vermillion)';
+            follower.style.borderWidth = '1px';
+        });
+
+        // Smooth Animation Loop
+        function animate() {
+            // Smooth Glow
+            currentX += (mouseX - currentX) * 0.08;
+            currentY += (mouseY - currentY) * 0.08;
+            glow.style.setProperty('--x', `${currentX}px`);
+            glow.style.setProperty('--y', `${currentY}px`);
+
+            // Smooth Ring Follower
+            followerX += (mouseX - followerX) * 0.15;
+            followerY += (mouseY - followerY) * 0.15;
+            follower.style.left = followerX + 'px';
+            follower.style.top = followerY + 'px';
+
+            requestAnimationFrame(animate);
+        }
+
+        window.onload = () => {
+            animate();
+
+            // Subtle entry animation
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                card.style.transition = 'opacity 1s ease, transform 1s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+                setTimeout(() => {
+                    card.style.transition = 'transform 0.15s ease-out';
+                }, 1000);
+            }, 100);
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Link Viewer</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div id="inputUrl">
+            <input id="userInput" type="text" placeholder="Type URL here... Primarily used for youtube links. Resize display by dragging the bottom-right corner.">
+            <div id="buttons">
+                <a href="https://youtube.com" target="_blank"><button>Open youtube.com</button></a>
+                <button onclick="updateIframe()">Search</button>
+                <button onclick="fullscreen()">Fullscreen</button>
+                <button onclick="home()">Back to startup page</button>
+            </div>
+
+            <iframe id="myFrame" width="75%" height="400" src="/startupIFrame.html" allowfullscreen></iframe>
+        </div>
+
+        <script>
+            const input = document.getElementById("userInput");
+
+            input.addEventListener("blur", function() {
+                if (!input.value.startsWith("https://")) {
+                    input.value = "https://" + input.value.replace(/^https?:\/\//, "");
+                }
+            });
+
+            function updateIframe() {
+                let url = document.getElementById("userInput").value;
+                let formatted = url;
+            
+                if (url.includes("youtube")) {
+                    formatted = url.replace("watch?v=", "embed/");
+                }
+            
+                document.getElementById("myFrame").src = formatted;
+            }
+
+            function fullscreen(){
+                const elem = document.getElementById('myFrame');
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.webkitRequestFullscreen) {
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) {
+                    elem.msRequestFullscreen();
+                }
+            }
+            
+            function home(){
+                const home = "/startupIFrame.html"
+                document.getElementById("myFrame").src = home;
+            }
+            </script>
+    </body>
+</html>
